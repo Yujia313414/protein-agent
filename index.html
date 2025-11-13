@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>蛋白蛋博士 - 你的蛋白质序列分析小助手</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { border: 2px solid #4CAF50; padding: 20px; border-radius: 10px; }
+        h1 { color: #4CAF50; }
+        textarea { width: 100%; height: 100px; }
+        button { background-color: #4CAF50; color: white; padding: 10px; border: none; cursor: pointer; }
+        #result { margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #4CAF50; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧬 蛋白蛋博士</h1>
+        <p><strong>角色：</strong>蛋白质分析专家</p >
+        <p><strong>思维模式：</strong>由简入繁，先分析基础属性，再查询专业数据库。</p >
+        <p>请在下面输入蛋白质序列（只包含字母，如：MALWMRLL...）：</p >
+        <textarea id="proteinSequence" placeholder="例如：MALWMRLLPLLALLALWGPDPAAAF..."></textarea>
+        <br><br>
+        <button onclick="analyzeProtein()">开始分析！</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 这就是我们“机器人小侦探”的大脑程序！
+        function analyzeProtein() {
+            // 1. 获取用户输入的序列
+            let sequence = document.getElementById('proteinSequence').value.toUpperCase().replace(/\s/g, '');
+            let resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "<p>蛋白蛋博士正在思考...</p >";
+
+            // 2. 思维模式：先进行基础分析
+            let basicInfo = analyzeBasic(sequence);
+
+            // 3. 思维模式：然后去问“外援”（API），获取更专业的信息
+            // 注意：这里我们先模拟一下，因为直接调用API对小朋友来说有点难。
+            // 我们稍后会讲怎么把它变成真的。
+            <!DOCTYPE html>
+<html>
+<head>
+    <title>蛋白蛋博士 - 你的蛋白质序列分析小助手</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { border: 2px solid #4CAF50; padding: 20px; border-radius: 10px; }
+        h1 { color: #4CAF50; }
+        textarea { width: 100%; height: 100px; }
+        button { background-color: #4CAF50; color: white; padding: 10px; border: none; cursor: pointer; }
+        #result { margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #4CAF50; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧬 蛋白蛋博士</h1>
+        <p><strong>角色：</strong>蛋白质分析专家</p >
+        <p><strong>思维模式：</strong>由简入繁，先分析基础属性，再查询专业数据库。</p >
+        <p>请在下面输入蛋白质序列（只包含字母，如：MALWMRLL...）：</p >
+        <textarea id="proteinSequence" placeholder="例如：MALWMRLLPLLALLALWGPDPAAAF..."></textarea>
+        <br><br>
+        <button onclick="analyzeProtein()">开始分析！</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 这就是我们“机器人小侦探”的大脑程序！
+        function analyzeProtein() {
+            // 1. 获取用户输入的序列
+            let sequence = document.getElementById('proteinSequence').value.toUpperCase().replace(/\s/g, '');
+            let resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "<p>蛋白蛋博士正在思考...</p >";
+
+            // 2. 思维模式：先进行基础分析
+            let basicInfo = analyzeBasic(sequence);
+
+            // 3. 思维模式：然后去问“外援”（API），获取更专业的信息
+            // 注意：这里我们先模拟一下，因为直接调用API对小朋友来说有点难。
+            // 我们稍后会讲怎么把它变成真的。
+    // 工具2：身份查询器（真实API版）
+function fetchProfessionalInfo(seq, basicInfo, resultDiv) {
+    // 使用 EBI 的 Proteins API 进行序列相似性搜索
+    const url = `https://www.ebi.ac.uk/proteins/api/features?offset=0&size=100&sequence=${seq}`;
+
+    // 开始打电话问API
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('网络响应不正常');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // API回话了，我们来处理它给的数据
+            console.log(data); // 这行是为了方便大人们调试看的
+            let apiResults = '<p><strong>专业数据库查询结果：</strong></p ><ul>';
+
+            if (data && data.length > 0) {
+                // 取第一个最相似的结果
+                let firstHit = data[0];
+                apiResults += `<li>蛋白登录号：<strong>${firstHit.accession || '未知'}</strong></li>`;
+                apiResults += `<li>蛋白名称：<strong>${firstHit.protein || '未知'}</strong></li>`;
+
+                // 尝试获取功能描述
+                if (firstHit.comments && firstHit.comments.length > 0) {
+                    for (let comment of firstHit.comments) {
+                        if (comment.text && comment.text[0]) {
+                            apiResults += `<li>功能描述：<strong>${comment.text[0].value || '无描述'}</strong></li>`;
+                            break;
+                        }
+                    }
+                } else {
+                    apiResults += `<li>功能描述：<strong>无相关描述信息</strong></li>`;
+                }
+
+            } else {
+                apiResults += `<li>抱歉，没有在数据库中找到高度相似的蛋白。</li>`;
+            }
+            apiResults += '</ul>';
+
+            // 把最终结果展示在网页上
+            resultDiv.innerHTML = `
+                <h3>🔍 蛋白蛋博士的分析报告：</h3>
+                <p><strong>基本信息：</strong></p >
+                <ul>
+                    <li>序列长度：<strong>${basicInfo.length}</strong> 个氨基酸</li>
+                    <li>丙氨酸（A）的数量：<strong>${basicInfo.alanineCount}</strong> 个</li>
+                    <li>亮氨酸（L）的数量：<strong>${basicInfo.leucineCount}</strong> 个</li>
+                </ul>
+                ${apiResults}
+                <p><em>数据来源：EBI Proteins API</em></p >
+            `;
+        })
+        .catch(error => {
+            // 如果打电话失败了怎么办
+            console.error('出错了:', error);
+            resultDiv.innerHTML = `<p>抱歉，蛋白蛋博士查询资料时遇到了网络问题。请稍后再试，或者检查你的序列格式。（错误：${error.message}）</p >`;
+        });
+}
+
+        // 工具1：基本信息扫描仪
+        function analyzeBasic(seq) {
+            let length = seq.length;
+            // 简单的氨基酸组成统计（这里只算两个例子）
+            let alanineCount = (seq.match(/A/g) || []).length;
+            let leucineCount = (seq.match(/L/g) || []).length;
+
+            return {
+                length: length,
+                alanineCount: alanineCount,
+                leucineCount: leucineCount
+            };
+        }
